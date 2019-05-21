@@ -1,0 +1,23 @@
+.game-container {
+  background-color: #c38f64;
+  border-radius: 7px;
+  padding: 5px;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.cell {
+  width: 100px;
+  height: 87.5px;
+  font-size: 2em;
+  text-align: center;
+  line-height: 87.5px;
+  font-weight: 700;
+  background-color: #E7B083;
+  color: #705E50;
+  border-radius: 7px;
+  margin: 5px;
+}
