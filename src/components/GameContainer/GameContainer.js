@@ -3,7 +3,6 @@ import "./GameContainer.scss";
 
 class GameContainer extends Component {
   render() {
-    console.log(this.props.cells);
     const { cells } = this.props;
     return (
       <div className="game-container">
