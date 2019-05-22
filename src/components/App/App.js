@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.scss";
 import { Heading } from "../Heading";
 import { GameContainer } from "../GameContainer";
+import { sumDoubleCells } from "../../utils/helpers";
 
 class App extends Component {
   state = {
@@ -65,37 +66,12 @@ class App extends Component {
   };
 
   moveCellsLeft = () => {
-
-    // const arr = [16, 32, 32, 16]; // -> [32, 16, 32]
-
-    const {cells} = this.state;
-
-    cells.map(cell => this.sumDoubleCells(cell));
-
-    console.log(cells);
-  };
-
-  sumDoubleCells = arr => {
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i] !== null) {
-        for (let j = i + 1; j < arr.length; j++) {
-          if (arr[i] === arr[j]) {
-            const sum = arr[i] + arr[j];
-            arr.splice(i, 1, sum);
-            arr.splice(j, 1);
-            j = arr.length;
-          } else {
-            if (arr[j] !== null) {
-              j = arr.length;
-            }
-          }
-        }
-      } else {
-        arr.splice(i, 1);
-        i--;
-      }
-    }
-    return arr;
+    // const arr = [null, 2, 2, 4];
+    // sumDoubleCells(arr);
+    // console.log(arr);
+    const { cells } = this.state;
+    cells.map(cell => sumDoubleCells(cell));
+    this.setState({ cells });
   };
 
   generateRandomInteger = () => {
