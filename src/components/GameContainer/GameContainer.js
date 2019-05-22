@@ -1,35 +1,24 @@
-import React from "react";
+import React, { Component } from "react";
 import "./GameContainer.scss";
 
-const GameContainer = () => {
-  return (
-    <div className="game-container">
-      <div className="row">
-        <div className="cell">1</div>
-        <div className="cell">1</div>
-        <div className="cell">1</div>
-        <div className="cell">1</div>
+class GameContainer extends Component {
+  render() {
+    console.log(this.props.cells);
+    const { cells } = this.props;
+    return (
+      <div className="game-container">
+        {cells.map((row, i) => (
+          <div key={i} className="row">
+            {row.map((cell, k) => (
+              <div key={k} className="cell">
+                {cell}
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
-      <div className="row">
-        <div className="cell">1</div>
-        <div className="cell">1</div>
-        <div className="cell">1</div>
-        <div className="cell">1</div>
-      </div>
-      <div className="row">
-        <div className="cell">1</div>
-        <div className="cell">1</div>
-        <div className="cell">1</div>
-        <div className="cell">1</div>
-      </div>
-      <div className="row">
-        <div className="cell">1</div>
-        <div className="cell">1</div>
-        <div className="cell">1</div>
-        <div className="cell">1</div>
-      </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default GameContainer;
