@@ -5,18 +5,18 @@ import { GameContainer } from "../GameContainer";
 
 class App extends Component {
   state = {
-    cells: [
+    /* cells: [
       [null, null, null, null],
       [null, null, null, null],
       [null, null, null, null],
       [null, null, null, null]
-    ],
-    /*cells: [
-      [1, 1, 1, 1],
-      [1, null, null, null],
-      [null, 1, null, 1],
-      [null, null, 1, null]
     ],*/
+    cells: [
+      [4, 4, null, null],
+      [4, null, 4, null],
+      [4, 4, null, 4],
+      [4, 4, 4, 4]
+    ],
     startGame: true
   };
 
@@ -35,8 +35,15 @@ class App extends Component {
     document.removeEventListener("keydown", this.handleKeyPress);
   }
 
-  handleKeyPress = e => {
-    console.log(e);
+  handleKeyPress = ({ keyCode }) => {
+    const arrowLeft = 37;
+    const arrowUp = 38;
+    const arrowRight = 39;
+    const arrowDown = 40;
+
+    if (keyCode === arrowLeft) {
+      this.moveCellsLeft();
+    }
   };
 
   startNewGame = () => {
@@ -45,7 +52,7 @@ class App extends Component {
   };
 
   addRandomTwo = () => {
-    const cells = this.state.cells;
+    const { cells } = this.state;
     const randRow = this.generateRandomInteger();
     const randColumn = this.generateRandomInteger();
 
@@ -55,6 +62,40 @@ class App extends Component {
     } else {
       this.addRandomTwo();
     }
+  };
+
+  moveCellsLeft = () => {
+
+    // const arr = [16, 32, 32, 16]; // -> [32, 16, 32]
+
+    const {cells} = this.state;
+
+    cells.map(cell => this.sumDoubleCells(cell));
+
+    console.log(cells);
+  };
+
+  sumDoubleCells = arr => {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] !== null) {
+        for (let j = i + 1; j < arr.length; j++) {
+          if (arr[i] === arr[j]) {
+            const sum = arr[i] + arr[j];
+            arr.splice(i, 1, sum);
+            arr.splice(j, 1);
+            j = arr.length;
+          } else {
+            if (arr[j] !== null) {
+              j = arr.length;
+            }
+          }
+        }
+      } else {
+        arr.splice(i, 1);
+        i--;
+      }
+    }
+    return arr;
   };
 
   generateRandomInteger = () => {

@@ -8,8 +8,8 @@ class GameContainer extends Component {
       <div className="game-container">
         {cells.map((row, i) => (
           <div key={i} className="row">
-            {row.map((cell, k) => (
-              <div key={k} className="cell">
+            {row.map((cell, j) => (
+              <div key={j} className="cell">
                 {cell}
               </div>
             ))}
