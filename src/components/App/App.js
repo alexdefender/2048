@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.scss";
 import { Heading } from "../Heading";
 import { GameContainer } from "../GameContainer";
-import { sumDoubleCells } from "../../utils/helpers";
+import { sumDoubleCells, rotate90 } from "../../utils/helpers";
 
 class App extends Component {
   state = {
@@ -13,10 +13,10 @@ class App extends Component {
       [null, null, null, null]
     ],*/
     cells: [
-      [4, 4, null, null],
-      [4, null, 4, null],
-      [4, 4, null, 4],
-      [4, 4, 4, 4]
+      [4, null, null, null],
+      [4, null, null, null],
+      [4, null, null, null],
+      [4, null, null, null]
     ],
     startGame: true
   };
@@ -45,6 +45,14 @@ class App extends Component {
     if (keyCode === arrowLeft) {
       this.moveCellsLeft();
     }
+
+    if (keyCode === arrowUp) {
+      this.moveCellsUp();
+    }
+
+    if (keyCode === arrowRight) {
+      this.moveCellsRight();
+    }
   };
 
   startNewGame = () => {
@@ -54,8 +62,10 @@ class App extends Component {
 
   addRandomTwo = () => {
     const { cells } = this.state;
-    const randRow = this.generateRandomInteger();
-    const randColumn = this.generateRandomInteger();
+    const min = 0;
+    const max = cells.length - 1;
+    const randRow = this.generateRandomInteger(min, max);
+    const randColumn = this.generateRandomInteger(min, max);
 
     if (cells[randRow][randColumn] === null) {
       cells[randRow][randColumn] = 2;
@@ -72,11 +82,25 @@ class App extends Component {
     const { cells } = this.state;
     cells.map(cell => sumDoubleCells(cell));
     this.setState({ cells });
+    this.addRandomTwo();
   };
 
-  generateRandomInteger = () => {
-    const min = 0;
-    const max = 3;
+  moveCellsUp = () => {
+    const { cells } = this.state;
+    let rotateArr = rotate90(cells);
+    rotateArr.map(cell => sumDoubleCells(cell));
+    rotateArr = rotate90(rotateArr);
+    rotateArr = rotate90(rotateArr);
+    rotateArr = rotate90(rotateArr);
+    this.setState({ cells: rotateArr });
+    this.addRandomTwo();
+  };
+
+  moveCellsRight = () => {
+
+  }
+
+  generateRandomInteger = (min, max) => {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
     return Math.round(rand);
   };
