@@ -31,10 +31,6 @@ export const sumDoubleCells = arr => {
 };
 
 export const rotate90 = arr => {
-  console.log("==========================");
-
-
-  arr.forEach(console.log);
   const rotateArr = [[], [], [], []];
 
   for (let i = 0; i < arr.length; i++) {
@@ -42,8 +38,6 @@ export const rotate90 = arr => {
       rotateArr[j][i] = arr[i][arr.length - 1 - j];
     }
   }
-
-
 
   return rotateArr;
 };

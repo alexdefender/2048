@@ -54,8 +54,8 @@ class App extends Component {
       this.moveCellsRight();
     }
 
-    if (keyCode === arrowRight) {
-      this.moveCellsRight();
+    if (keyCode === arrowDown) {
+      this.moveCellsDown();
     }
   };
 
@@ -80,9 +80,6 @@ class App extends Component {
   };
 
   moveCellsLeft = () => {
-    // const arr = [null, 2, 2, 4];
-    // sumDoubleCells(arr);
-    // console.log(arr);
     const { cells } = this.state;
     cells.map(cell => sumDoubleCells(cell));
     this.setState({ cells });
@@ -109,7 +106,18 @@ class App extends Component {
     rotateArr = rotate90(rotateArr);
     this.setState({ cells: rotateArr });
     this.addRandomTwo();
-  }
+  };
+
+  moveCellsDown = () => {
+    const { cells } = this.state;
+    let rotateArr = rotate90(cells);
+    rotateArr = rotate90(rotateArr);
+    rotateArr = rotate90(rotateArr);
+    rotateArr.map(cell => sumDoubleCells(cell));
+    rotateArr = rotate90(rotateArr);
+    this.setState({ cells: rotateArr });
+    this.addRandomTwo();
+  };
 
   generateRandomInteger = (min, max) => {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
