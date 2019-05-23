@@ -3,32 +3,34 @@ import "./App.scss";
 import { Heading } from "../Heading";
 import { GameContainer } from "../GameContainer";
 import { sumDoubleCells, rotate90 } from "../../utils/helpers";
+import {
+  ARROW_LEFT,
+  ARROW_UP,
+  ARROW_RIGHT,
+  ARROW_DOWN,
+  START_INT
+} from "../../utils/variables";
 
 class App extends Component {
   state = {
-    /* cells: [
+    cells: [
       [null, null, null, null],
       [null, null, null, null],
       [null, null, null, null],
       [null, null, null, null]
-    ],*/
-    cells: [
-      [4, null, null, null],
-      [4, null, null, null],
-      [4, null, null, null],
-      [4, null, null, null]
-    ],
-    startGame: true
+    ]
   };
 
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress);
+    this.setState({ startGame: true });
+  }
 
+  componentDidUpdate() {
     if (this.state.startGame) {
-      this.startNewGame();
-      this.setState({ startGame: false });
-    } else {
       this.addRandomTwo();
+      this.addRandomTwo();
+      this.setState({ startGame: false });
     }
   }
 
@@ -37,31 +39,25 @@ class App extends Component {
   }
 
   handleKeyPress = ({ keyCode }) => {
-    const arrowLeft = 37;
-    const arrowUp = 38;
-    const arrowRight = 39;
-    const arrowDown = 40;
-
-    if (keyCode === arrowLeft) {
+    if (keyCode === ARROW_LEFT) {
       this.moveCellsLeft();
-    }
-
-    if (keyCode === arrowUp) {
+    } else if (keyCode === ARROW_UP) {
       this.moveCellsUp();
-    }
-
-    if (keyCode === arrowRight) {
+    } else if (keyCode === ARROW_RIGHT) {
       this.moveCellsRight();
-    }
-
-    if (keyCode === arrowDown) {
+    } else if (keyCode === ARROW_DOWN) {
       this.moveCellsDown();
     }
   };
 
   startNewGame = () => {
-    this.addRandomTwo();
-    this.addRandomTwo();
+    const cells = [
+      [null, null, null, null],
+      [null, null, null, null],
+      [null, null, null, null],
+      [null, null, null, null]
+    ];
+    this.setState({ cells, startGame: true });
   };
 
   addRandomTwo = () => {
@@ -72,7 +68,7 @@ class App extends Component {
     const randColumn = this.generateRandomInteger(min, max);
 
     if (cells[randRow][randColumn] === null) {
-      cells[randRow][randColumn] = 2;
+      cells[randRow][randColumn] = START_INT;
       this.setState({ cells });
     } else {
       this.addRandomTwo();
@@ -129,7 +125,7 @@ class App extends Component {
 
     return (
       <div className="container">
-        <Heading />
+        <Heading startNewGame={this.startNewGame} />
         <GameContainer cells={cells} />
       </div>
     );
