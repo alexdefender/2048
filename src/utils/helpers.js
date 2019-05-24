@@ -1,11 +1,13 @@
 export const sumDoubleCells = arr => {
   const arrLength = arr.length;
+  let score = 0;
 
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] !== null) {
       for (let j = i + 1; j < arr.length; j++) {
         if (arr[i] === arr[j]) {
           const sum = arr[i] + arr[j];
+          score += sum;
           arr.splice(i, 1, sum);
           arr.splice(j, 1);
           j = arr.length;
@@ -26,8 +28,7 @@ export const sumDoubleCells = arr => {
       arr.push(null);
     }
   }
-
-  return arr;
+  return { arr, score };
 };
 
 export const rotate90 = arr => {

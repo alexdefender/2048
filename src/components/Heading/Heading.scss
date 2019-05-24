@@ -7,8 +7,9 @@
 @mixin scores {
   position: relative;
   background-color: #e7b083;
-  width: 80px;
+  min-width: 50px;
   height: 50px;
+  padding: 0 3px;
   line-height: 70px;
   text-align: center;
   font-weight: 600;

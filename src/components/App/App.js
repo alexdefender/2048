@@ -18,7 +18,8 @@ class App extends Component {
       [null, null, null, null],
       [null, null, null, null],
       [null, null, null, null]
-    ]
+    ],
+    score: 0
   };
 
   componentDidMount() {
@@ -76,42 +77,58 @@ class App extends Component {
   };
 
   moveCellsLeft = () => {
-    const { cells } = this.state;
-    cells.map(cell => sumDoubleCells(cell));
-    this.setState({ cells });
+    let { cells, score } = this.state;
+    cells.map(cell => {
+      const arrScore = sumDoubleCells(cell);
+      score += arrScore.score;
+      return arrScore.arr;
+    });
+    this.setState({ cells, score });
     this.addRandomTwo();
   };
 
   moveCellsUp = () => {
-    const { cells } = this.state;
+    let { cells, score } = this.state;
     let rotateArr = rotate90(cells);
-    rotateArr.map(cell => sumDoubleCells(cell));
+    rotateArr.map(cell => {
+      const arrScore = sumDoubleCells(cell);
+      score += arrScore.score;
+      return arrScore.arr;
+    });
     rotateArr = rotate90(rotateArr);
     rotateArr = rotate90(rotateArr);
     rotateArr = rotate90(rotateArr);
-    this.setState({ cells: rotateArr });
+    this.setState({ cells: rotateArr, score });
     this.addRandomTwo();
   };
 
   moveCellsRight = () => {
-    const { cells } = this.state;
+    let { cells, score } = this.state;
     let rotateArr = rotate90(cells);
     rotateArr = rotate90(rotateArr);
-    rotateArr.map(cell => sumDoubleCells(cell));
+    rotateArr.map(cell => {
+      const arrScore = sumDoubleCells(cell);
+      score += arrScore.score;
+      return arrScore.arr;
+    });
     rotateArr = rotate90(rotateArr);
     rotateArr = rotate90(rotateArr);
-    this.setState({ cells: rotateArr });
+    this.setState({ cells: rotateArr, score });
     this.addRandomTwo();
   };
 
   moveCellsDown = () => {
-    const { cells } = this.state;
+    let { cells, score } = this.state;
     let rotateArr = rotate90(cells);
     rotateArr = rotate90(rotateArr);
     rotateArr = rotate90(rotateArr);
-    rotateArr.map(cell => sumDoubleCells(cell));
+    rotateArr.map(cell => {
+      const arrScore = sumDoubleCells(cell);
+      score += arrScore.score;
+      return arrScore.arr;
+    });
     rotateArr = rotate90(rotateArr);
-    this.setState({ cells: rotateArr });
+    this.setState({ cells: rotateArr, score });
     this.addRandomTwo();
   };
 
@@ -121,11 +138,11 @@ class App extends Component {
   };
 
   render() {
-    const { cells } = this.state;
+    const { cells, score } = this.state;
 
     return (
       <div className="container">
-        <Heading startNewGame={this.startNewGame} />
+        <Heading startNewGame={this.startNewGame} score={score} />
         <GameContainer cells={cells} />
       </div>
     );
