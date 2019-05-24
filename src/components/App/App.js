@@ -20,7 +20,7 @@ class App extends Component {
       [null, null, null, null],
       [null, null, null, null]
     ],
-    /*cells: [[2, 4, 8, 16], [32, 64, 2, 4], [2, 4, 8, 2], [8, 16, null, null]],*/
+    /*cells: [[2, 4, 8, 16], [32, 64, 128, 256], [512, 1024, 2048, 4096], [8192, 16384, null, null]],*/
     score: 0,
     startGame: true,
     gameOver: false

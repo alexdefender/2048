@@ -22,33 +22,42 @@
   margin: 5px;
 }
 
-.cell-2, .cell-256 {
+.cell-2,
+.cell-256 {
   background-color: #ffe1bf;
 }
 
-.cell-4, .cell-512 {
+.cell-4,
+.cell-512 {
   background-color: #c36464;
   color: #f8eacf;
 }
 
-.cell-8, .cell-1024 {
+.cell-8,
+.cell-1024 {
   background-color: #b34f87;
   color: #f8eacf;
 }
 
-.cell-16, .cell-2048 {
+.cell-16,
+.cell-2048 {
   background-color: #4fb34f;
+  color: #f8eacf;
 }
 
-.cell-32, .cell-4096 {
+.cell-32,
+.cell-4096 {
   background-color: #df6262;
+  color: #f8eacf;
 }
 
-.cell-64, .cell-8192 {
+.cell-64,
+.cell-8192 {
   background-color: #b8753d;
   color: #f8eacf;
 }
 
-.cell-128, .cell-16384 {
-  background-color: #65C665;
+.cell-128,
+.cell-16384 {
+  background-color: #65c665;
 }
