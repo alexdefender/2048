@@ -13,13 +13,13 @@ import {
 
 class App extends Component {
   state = {
-    /*cells: [
+    cells: [
       [null, null, null, null],
       [null, null, null, null],
       [null, null, null, null],
       [null, null, null, null]
-    ],*/
-    cells: [[2, 4, 8, 16], [32, 64, 2, 4], [2, 4, 8, 2], [8, 16, null, null]],
+    ],
+    /*cells: [[2, 4, 8, 16], [32, 64, 2, 4], [2, 4, 8, 2], [8, 16, null, null]],*/
     score: 0,
     startGame: true,
     gameOver: false
@@ -62,8 +62,6 @@ class App extends Component {
       [null, null, null, null]
     ];
     this.setState({ cells, startGame: true, gameOver: false, score: 0 });
-
-    return cells;
   };
 
   addRandomTwo = () => {
@@ -109,26 +107,20 @@ class App extends Component {
 
   moveCellsDown = () => {
     let { cells } = this.state;
-    console.log(1, cells);
     for (let i = 0; i < 3; i++) {
       cells = rotate90(cells);
     }
-    console.log(2, cells);
-
     cells = this.getArrayfromSumDoubleCells(cells);
-
-    console.log(3, cells);
-
     cells = rotate90(cells);
     this.addCellsOrStartNewGame(cells);
   };
 
   addCellsOrStartNewGame = arr => {
-    console.log(this.state.gameOver);
     if (!this.state.gameOver) {
       this.setState({ cells: arr });
       this.addRandomTwo();
     } else {
+      alert("Game Over");
       this.startNewGame();
     }
   };
