@@ -19,6 +19,7 @@ class App extends Component {
       [null, null, null, null],
       [null, null, null, null]
     ],
+    /* cells: [[2, 4, 8, 16], [32, 64, 2, 4], [2, 4, 8, 2], [8, 2, null, null]],*/
     score: 0
   };
 
@@ -77,64 +78,58 @@ class App extends Component {
   };
 
   moveCellsLeft = () => {
-    let { cells, score } = this.state;
-    cells.map(cell => {
-      const arrScore = sumDoubleCells(cell);
-      score += arrScore.score;
-      return arrScore.arr;
-    });
-    this.setState({ cells, score });
+    let { cells } = this.state;
+    cells = this.getArrayfromSumDoubleCells(cells); // Как правильно, передать значение по ссылке или скопировать в новый массив?
+    this.setState({ cells });
     this.addRandomTwo();
   };
 
   moveCellsUp = () => {
-    let { cells, score } = this.state;
-    let rotateArr = rotate90(cells);
-    rotateArr.map(cell => {
-      const arrScore = sumDoubleCells(cell);
-      score += arrScore.score;
-      return arrScore.arr;
-    });
-    rotateArr = rotate90(rotateArr);
-    rotateArr = rotate90(rotateArr);
-    rotateArr = rotate90(rotateArr);
-    this.setState({ cells: rotateArr, score });
+    let { cells } = this.state;
+    cells = rotate90(cells);
+    cells = this.getArrayfromSumDoubleCells(cells);
+    for (let i = 0; i < 3; i++) {
+      cells = rotate90(cells);
+    }
+    this.setState({ cells });
     this.addRandomTwo();
   };
 
   moveCellsRight = () => {
-    let { cells, score } = this.state;
-    let rotateArr = rotate90(cells);
-    rotateArr = rotate90(rotateArr);
-    rotateArr.map(cell => {
-      const arrScore = sumDoubleCells(cell);
-      score += arrScore.score;
-      return arrScore.arr;
-    });
-    rotateArr = rotate90(rotateArr);
-    rotateArr = rotate90(rotateArr);
-    this.setState({ cells: rotateArr, score });
+    let { cells } = this.state;
+    cells = rotate90(cells);
+    cells = rotate90(cells);
+    cells = this.getArrayfromSumDoubleCells(cells);
+    cells = rotate90(cells);
+    cells = rotate90(cells);
+    this.setState({ cells });
     this.addRandomTwo();
   };
 
   moveCellsDown = () => {
-    let { cells, score } = this.state;
-    let rotateArr = rotate90(cells);
-    rotateArr = rotate90(rotateArr);
-    rotateArr = rotate90(rotateArr);
-    rotateArr.map(cell => {
-      const arrScore = sumDoubleCells(cell);
-      score += arrScore.score;
-      return arrScore.arr;
-    });
-    rotateArr = rotate90(rotateArr);
-    this.setState({ cells: rotateArr, score });
+    let { cells } = this.state;
+    for (let i = 0; i < 3; i++) {
+      cells = rotate90(cells);
+    }
+    cells = this.getArrayfromSumDoubleCells(cells);
+    cells = rotate90(cells);
+    this.setState({ cells });
     this.addRandomTwo();
   };
 
   generateRandomInteger = (min, max) => {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
     return Math.round(rand);
+  };
+
+  getArrayfromSumDoubleCells = arr => {
+    let { score } = this.state;
+    return arr.map(cell => {
+      const arrScore = sumDoubleCells(cell);
+      score += arrScore.score;
+      this.setState({ score });
+      return arrScore.arr;
+    });
   };
 
   render() {
