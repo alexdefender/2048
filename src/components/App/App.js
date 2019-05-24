@@ -13,14 +13,16 @@ import {
 
 class App extends Component {
   state = {
-    cells: [
+    /*cells: [
       [null, null, null, null],
       [null, null, null, null],
       [null, null, null, null],
       [null, null, null, null]
-    ],
-    /* cells: [[2, 4, 8, 16], [32, 64, 2, 4], [2, 4, 8, 2], [8, 2, null, null]],*/
-    score: 0
+    ],*/
+    cells: [[2, 4, 8, 16], [32, 64, 2, 4], [2, 4, 8, 2], [8, 16, null, null]],
+    score: 0,
+    startGame: true,
+    gameOver: false
   };
 
   componentDidMount() {
@@ -59,7 +61,9 @@ class App extends Component {
       [null, null, null, null],
       [null, null, null, null]
     ];
-    this.setState({ cells, startGame: true });
+    this.setState({ cells, startGame: true, gameOver: false, score: 0 });
+
+    return cells;
   };
 
   addRandomTwo = () => {
@@ -80,8 +84,7 @@ class App extends Component {
   moveCellsLeft = () => {
     let { cells } = this.state;
     cells = this.getArrayfromSumDoubleCells(cells); // Как правильно, передать значение по ссылке или скопировать в новый массив?
-    this.setState({ cells });
-    this.addRandomTwo();
+    this.addCellsOrStartNewGame(cells);
   };
 
   moveCellsUp = () => {
@@ -91,8 +94,7 @@ class App extends Component {
     for (let i = 0; i < 3; i++) {
       cells = rotate90(cells);
     }
-    this.setState({ cells });
-    this.addRandomTwo();
+    this.addCellsOrStartNewGame(cells);
   };
 
   moveCellsRight = () => {
@@ -102,19 +104,33 @@ class App extends Component {
     cells = this.getArrayfromSumDoubleCells(cells);
     cells = rotate90(cells);
     cells = rotate90(cells);
-    this.setState({ cells });
-    this.addRandomTwo();
+    this.addCellsOrStartNewGame(cells);
   };
 
   moveCellsDown = () => {
     let { cells } = this.state;
+    console.log(1, cells);
     for (let i = 0; i < 3; i++) {
       cells = rotate90(cells);
     }
+    console.log(2, cells);
+
     cells = this.getArrayfromSumDoubleCells(cells);
+
+    console.log(3, cells);
+
     cells = rotate90(cells);
-    this.setState({ cells });
-    this.addRandomTwo();
+    this.addCellsOrStartNewGame(cells);
+  };
+
+  addCellsOrStartNewGame = arr => {
+    console.log(this.state.gameOver);
+    if (!this.state.gameOver) {
+      this.setState({ cells: arr });
+      this.addRandomTwo();
+    } else {
+      this.startNewGame();
+    }
   };
 
   generateRandomInteger = (min, max) => {
@@ -124,12 +140,25 @@ class App extends Component {
 
   getArrayfromSumDoubleCells = arr => {
     let { score } = this.state;
-    return arr.map(cell => {
+    const tempScore = score;
+    let isNull = false;
+
+    arr.map(cell => {
       const arrScore = sumDoubleCells(cell);
       score += arrScore.score;
       this.setState({ score });
+      if (cell.includes(null)) {
+        isNull = true;
+      }
       return arrScore.arr;
     });
+
+    if (isNull || tempScore !== score) {
+      return arr;
+    } else {
+      this.setState({ gameOver: true });
+      return arr;
+    }
   };
 
   render() {
