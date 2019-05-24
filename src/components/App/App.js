@@ -8,7 +8,8 @@ import {
   ARROW_UP,
   ARROW_RIGHT,
   ARROW_DOWN,
-  START_INT
+  START_INT,
+  COLOR_CELL
 } from "../../utils/variables";
 
 class App extends Component {
@@ -36,6 +37,8 @@ class App extends Component {
       this.addRandomTwo();
       this.setState({ startGame: false });
     }
+
+    this.addColorCell();
   }
 
   componentWillUnmount() {
@@ -77,6 +80,17 @@ class App extends Component {
     } else {
       this.addRandomTwo();
     }
+  };
+
+  addColorCell = () => {
+    const cells = document.querySelectorAll(".cell");
+    cells.forEach(el => {
+      Object.keys(COLOR_CELL).forEach(el2 => {
+        if (el.innerHTML === el2) {
+          el.className = COLOR_CELL[el2];
+        }
+      });
+    });
   };
 
   moveCellsLeft = () => {
