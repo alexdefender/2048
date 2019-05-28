@@ -20,5 +20,5 @@ export const COLOR_CELL = {
   "2048": "cell cell-2048",
   "4096": "cell cell-4096",
   "8192": "cell cell-8192",
-  "16384": "cell cell-16384",
-}
+  "16384": "cell cell-16384"
+};

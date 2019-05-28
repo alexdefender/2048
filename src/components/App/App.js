@@ -20,7 +20,6 @@ class App extends Component {
       [null, null, null, null],
       [null, null, null, null]
     ],
-    /*cells: [[2, 4, 8, 16], [32, 64, 128, 256], [512, 1024, 2048, 4096], [8192, 16384, null, null]],*/
     score: 0,
     startGame: true,
     gameOver: false
@@ -95,7 +94,7 @@ class App extends Component {
 
   moveCellsLeft = () => {
     let { cells } = this.state;
-    cells = this.getArrayfromSumDoubleCells(cells); // Как правильно, передать значение по ссылке или скопировать в новый массив?
+    cells = this.getArrayfromSumDoubleCells(cells);
     this.addCellsOrStartNewGame(cells);
   };
 
