@@ -28,7 +28,7 @@ class App extends Component {
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress);
     document.addEventListener("touchstart", this.handleTouchStart);
-    document.addEventListener("touchend", this.handleTouchMove, false);
+    document.addEventListener("touchend", this.handleTouchMove);
     this.setState({ startGame: true });
   }
 
@@ -44,6 +44,8 @@ class App extends Component {
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyPress);
+    document.removeEventListener("touchstart", this.handleTouchStart);
+    document.removeEventListener("touchend", this.handleTouchMove);
   }
 
   handleKeyPress = ({ keyCode }) => {
@@ -66,18 +68,18 @@ class App extends Component {
   handleTouchMove = e => {
     let distX = e.changedTouches[0].clientX - this.state.startX;
     let distY = e.changedTouches[0].clientY - this.state.startY;
+    let diffY = -30 < distY && distY < 30;
+    let diffX = -30 < distX && distX < 30;
 
-    if (distX < 0 && distY === 0) {
+    if (distX < 0 && diffY) {
       this.moveCellsLeft();
-    } else if (distX > 0 && distY === 0) {
+    } else if (distX > 0 && diffY) {
       this.moveCellsRight();
-    } else if (distY < 0 && distX === 0) {
+    } else if (distY < 0 && diffX) {
       this.moveCellsUp();
-    } else if (distY > 0 && distX === 0) {
+    } else if (distY > 0 && diffX) {
       this.moveCellsDown();
     }
-    console.log("distX", distX);
-    console.log("distY", distY);
   };
 
   startNewGame = () => {
